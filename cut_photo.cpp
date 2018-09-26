@@ -3,7 +3,7 @@
 #include <vector>
 #include <opencv2/opencv.hpp>
 
-// §¡≥Œπœ§˘ cut photo
+// ÂàáÂâ≤ÂúñÁâá cut photo
 void cutcut_photo(std::vector<std::string> ,int,int, int);
 
 int main()
@@ -12,20 +12,22 @@ int main()
 	photo_v.push_back("a.jpg");  // "a.jpg" is the name of the photo
 	photo_v.push_back("b.jpg");  // "b.jpg" is also the name of the photo
 	//void cutcut_photo(std::vector<std::string> photo_v, int x, int y, int photo_i)
-	// x : ™¯ (height) ≠n¥X piexl
-	// y : ºe (width)  ≠n¥X piexl
+	// x : Èï∑ (height) Ë¶ÅÂπæ piexl  (how many pixels of height do you want)
+	// y : ÂØ¨ (width)  Ë¶ÅÂπæ piexl  (how many pixels of width do you want)
 	// photo_i : first the name of finished photo  (ex: if photo_i == 1 ,the first the name of finished photo is "1.jpg")
 	cutcut_photo(photo_v, 416, 416, 1);
 
 	/*
-       /              ºe   width               \
+	Photo :
+	
+           /              ÂØ¨   width               \
 	    ---------------------------------------
 	 / |                                       |
 	   |                                       |
 	   |                                       |
 	   |                                       |
 	   |                                       |
-    ™¯ |                                       |
+        Èï∑ |                                       |
 	h  |                                       |
 	e  |                                       |
 	i  |                                       |
@@ -49,8 +51,8 @@ int main()
 
 void cutcut_photo(std::vector<std::string> photo_v, int x, int y, int photo_i)
 {
-	// x : ™¯ (height) ≠n¥X piexl
-	// y : ºe (width)  ≠n¥X piexl
+	// x : Èï∑ (height) Ë¶ÅÂπæ piexl
+	// y : ÂØ¨ (width)  Ë¶ÅÂπæ piexl
 
 	int check_use = 0;
 	for (unsigned int i = 0; i < photo_v.size(); i++)
