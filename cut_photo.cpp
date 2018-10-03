@@ -1,129 +1,115 @@
-#include <iostream>
-#include <string>
-#include <vector>
-#include <opencv2/opencv.hpp>
+#include "cut_photo.h"
 
-// ÂàáÂâ≤ÂúñÁâá cut photo
-void cutcut_photo(std::vector<std::string> ,int,int, int);
-
-int main()
-{	
-	std::vector<std::string> photo_v;  // store which photos want to cut
-	photo_v.push_back("a.jpg");  // "a.jpg" is the name of the photo
-	photo_v.push_back("b.jpg");  // "b.jpg" is also the name of the photo
-	//void cutcut_photo(std::vector<std::string> photo_v, int x, int y, int photo_i)
-	// x : Èï∑ (height) Ë¶ÅÂπæ piexl  (how many pixels of height do you want)
-	// y : ÂØ¨ (width)  Ë¶ÅÂπæ piexl  (how many pixels of width do you want)
-	// photo_i : first the name of finished photo  (ex: if photo_i == 1 ,the first the name of finished photo is "1.jpg")
-	cutcut_photo(photo_v, 416, 416, 1);
-
-	/*
-	Photo :
-	
-           /              ÂØ¨   width               \
-	    ---------------------------------------
-	 / |                                       |
-	   |                                       |
-	   |                                       |
-	   |                                       |
-	   |                                       |
-       Èï∑ |                                       |
-	h  |                                       |
-	e  |                                       |
-	i  |                                       |
-	g  |                                       |
-	h  |                                       |
-	t  |                                       |
-	   |                                       |
-	   |                                       |
-	   |                                       |
-	 \ |                                       |
-	    ---------------------------------------
-
-
-
-	*/
-
-	std::system("pause");
-
-	return 0;
+cut_photo::cut_photo()
+{
 }
 
-void cutcut_photo(std::vector<std::string> photo_v, int x, int y, int photo_i)
+cut_photo::~cut_photo()
 {
-	// x : Èï∑ (height) Ë¶ÅÂπæ piexl
-	// y : ÂØ¨ (width)  Ë¶ÅÂπæ piexl
+}
 
-	int check_use = 0;
-	for (unsigned int i = 0; i < photo_v.size(); i++)
+void cut_photo::set_x(int a)
+{
+	if (a <= 0)
 	{
-		cv::Mat src = cv::imread(photo_v[i]);
-		check_use = 0;
-		for (int j = 0; j < src.rows; j)
+		std::cout << " x vaild " << std::endl;
+	}
+	else
+	{
+		x = a;
+	}
+}
+void cut_photo::set_y(int b)
+{
+	if (b <= 0)
+	{
+		std::cout << " y vaild " << std::endl;
+	}
+	else
+	{
+		y = b;
+	}
+}
+
+void cut_photo::cutcut_photo(std::vector<std::string> photo_v)
+{
+	int check_use = 0;
+
+	if (x <= 0 || y <= 0)
+	{
+		std::cout << " x or y vaild " << std::endl;
+	}
+	else
+	{
+		for (unsigned int i = 0; i < photo_v.size(); i++)
 		{
-			for (int k = 0; k < src.cols; k)
+			cv::Mat src = cv::imread(photo_v[i] + ".jpg");
+			check_use = 0;
+			for (int j = 0; j < src.rows; j)
 			{
-				if (k < src.cols && j + x < (src.rows + 1))
+				for (int k = 0; k < src.cols; k)
 				{
-					k = k + y;
-					if (k >= src.cols)
+					if (k < src.cols && j + x < (src.rows + 1))
 					{
-						// k = src.cols - y;
-						cv::Rect rect((src.cols - y), j, y, x);
-						cv::Mat image = src(rect);
-						cv::imwrite((std::to_string(photo_i) + ".jpg"), image);
-						photo_i = photo_i + 1;
-					}
-					else
-					{
-						cv::Rect rect((k - y), j, y, x);
-						cv::Mat image = src(rect);
-						cv::imwrite((std::to_string(photo_i) + ".jpg"), image);
-						photo_i = photo_i + 1;
-						if (k + y == (src.cols))
+						k = k + y;
+						if (k >= src.cols)
 						{
-							k = k + y;
+							// k = src.cols - y;
+							cv::Rect rect((src.cols - y), j, y, x);
+							cv::Mat image = src(rect);
+							cut_photo_result.push_back(image);
+							// •™§W ((src.cols - y), j)  •k§U(src.cols - 1, j+x-1)
 						}
 						else
 						{
-							k = (k - y + (y / 2));
+							cv::Rect rect((k - y), j, y, x);
+							cv::Mat image = src(rect);
+							cut_photo_result.push_back(image);
+							// •™§W ((k-y),j)  •k§U (k-1,j+x-1)
+							if (k + y == (src.cols))
+							{
+								k = k + y;
+							}
+							else
+							{
+								k = (k - y + (y / 2));
+							}
 						}
-					}
-				}
-				else
-				{
-					k = src.cols;
-				}
-			}
-			if (check_use == 1)
-			{
-				j = src.rows;
-			}
-			else
-			{
-				if (j + x >= src.rows)
-				{
-					j = j + x;
-				}
-				else
-				{
-					j = j + (x / 2);
-				}
-				if (j < src.rows)
-				{
-					j = j + x;
-					if (j >= src.rows)
-					{
-						j = src.rows - x;
-						check_use = 1;
 					}
 					else
 					{
-						j = j - x;
+						k = src.cols;
+					}
+				}
+				if (check_use == 1)
+				{
+					j = src.rows;
+				}
+				else
+				{
+					if (j + x >= src.rows)
+					{
+						j = j + x;
+					}
+					else
+					{
+						j = j + (x / 2);
+					}
+					if (j < src.rows)
+					{
+						j = j + x;
+						if (j >= src.rows)
+						{
+							j = src.rows - x;
+							check_use = 1;
+						}
+						else
+						{
+							j = j - x;
+						}
 					}
 				}
 			}
 		}
 	}
-	
 }
