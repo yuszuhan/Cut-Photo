@@ -1,5 +1,5 @@
 #pragma once
-#ifndef CUT_PHOTO_H // __TEST_H__ ¥Ñ progrmmer ¦Û¤v¨ú¦W
+#ifndef CUT_PHOTO_H // __TEST_H__ Â¥Ã‘ progrmmer Â¦Ã›Â¤vÂ¨ÃºÂ¦W
 #define CUT_PHOTO_H
 
 #include <iostream>
@@ -26,14 +26,15 @@ private:
 	/*
 	Photo :
 
-	   /              ¼e   width               \
+	   /              y   width               \
 	    ---------------------------------------
 	/  |                                       |
 	   |                                       |
 	   |                                       |
 	   |                                       |
 	   |                                       |
-	ªø |                                       |
+	x  |                                       |
+	   |                                       |
 	h  |                                       |
 	e  |                                       |
 	i  |                                       |
