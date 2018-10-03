@@ -19,6 +19,7 @@ void cut_photo::set_x(int a)
 		x = a;
 	}
 }
+
 void cut_photo::set_y(int b)
 {
 	if (b <= 0)
@@ -58,14 +59,14 @@ void cut_photo::cutcut_photo(std::vector<std::string> photo_v)
 							cv::Rect rect((src.cols - y), j, y, x);
 							cv::Mat image = src(rect);
 							cut_photo_result.push_back(image);
-							// ¥ª¤W ((src.cols - y), j)  ¥k¤U(src.cols - 1, j+x-1)
+							// Â¥ÂªÂ¤W ((src.cols - y), j)  Â¥kÂ¤U(src.cols - 1, j+x-1)
 						}
 						else
 						{
 							cv::Rect rect((k - y), j, y, x);
 							cv::Mat image = src(rect);
 							cut_photo_result.push_back(image);
-							// ¥ª¤W ((k-y),j)  ¥k¤U (k-1,j+x-1)
+							// Â¥ÂªÂ¤W ((k-y),j)  Â¥kÂ¤U (k-1,j+x-1)
 							if (k + y == (src.cols))
 							{
 								k = k + y;
